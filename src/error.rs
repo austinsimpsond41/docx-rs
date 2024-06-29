@@ -29,5 +29,15 @@ impl From<ZipError> for DocxError {
     }
 }
 
+impl std::fmt::Display for DocxError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            DocxError::IO(io) => io.fmt(f),
+            DocxError::Xml(xml) => xml.fmt(f),
+            DocxError::Zip(zip) => zip.fmt(f),
+        }
+    }
+}
+
 /// Specialized `Result` which the error value is `DocxError`.
 pub type DocxResult<T> = Result<T, DocxError>;
